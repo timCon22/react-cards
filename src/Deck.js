@@ -15,18 +15,19 @@ function DrawFullDeck() {
     
     
     const drawCard = (deck) => {
-        console.log(deck.nativeEvent)
         async function getCard(deck){
             const res = await axios.get(`https://deckofcardsapi.com/api/deck/${deck}/draw/?count=1`)
             setCard(res.data.cards[0].image)
         }
-        getCard()
+        getCard(deck)
     }
     
     return (
         <div>
-            <button onClick={drawDeck}>Draw a deck!</button>
-            <button onClick={() => drawCard(deck)}>Draw a card!</button>
+            <div>
+                <button onClick={drawDeck}>Draw a deck!</button>
+                <button onClick={() => drawCard(deck)}>Draw a card!</button>
+            </div>
             <img src={card}/>
         </div>
     )
