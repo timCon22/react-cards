@@ -5,29 +5,32 @@ function DrawFullDeck() {
     const [deck, setDeck] = useState(null)
     const [card, setCard] = useState(null)
 
-    useEffect(function drawDeck(){
+    const drawDeck = () => {
         async function getDeck(){
             const res = await axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
             setDeck(res.data.deck_id)
         }
         getDeck()
-    }, [])
-
-    useEffect(function drawCard(){
-        async function getCard(){
-            const res = await axios.get(`https://deckofcardsapi.com/api/deck/${deck}/draw/?count=2`)
-            setCard(res.cards.image)
+    }
+    
+    
+    const drawCard = (deck) => {
+        console.log(deck.nativeEvent)
+        async function getCard(deck){
+            const res = await axios.get(`https://deckofcardsapi.com/api/deck/${deck}/draw/?count=1`)
+            setCard(res.data.cards[0].image)
         }
         getCard()
-    }, [])
-
+    }
+    
     return (
         <div>
-            <button onClick={}></button>
-            <img src={}/>
+            <button onClick={drawDeck}>Draw a deck!</button>
+            <button onClick={() => drawCard(deck)}>Draw a card!</button>
+            <img src={card}/>
         </div>
     )
-
+    
 }
 
 export default DrawFullDeck
